@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mentee Page</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     #Progress {
       width: 100%;    
@@ -82,7 +83,8 @@
       <div id="main">
         <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
         <section id = "welcomeSection">
-            <h2>Welcome Mentee, </h2>
+            <h2>Welcome Mentee, <span id="dashboard-name"></span> </h2>
+            <p id="points"></p>
         </section>
         <section id = "progressSection">
             <h2>Check your progress:</h2>
@@ -121,38 +123,56 @@
         </div>
 
    
-    <script>
-        var i = 0;
-        function progress() {
-        if (i == 0) {
-            i = 1;
-            var elem = document.getElementById("progressBar");
-            var width = 10;
-            var id = setInterval(frame, 10);
-            function frame() {
-            if (width >= 100) {
-                clearInterval(id);
-                i = 0;
-            } else {
-                width++;
-                elem.style.width = width + "%";
-                elem.innerHTML = width  + "%";
-            }
-            }
+  <script>
+    var i = 0;
+    function progress() {
+      if (i == 0) {
+        i = 1;
+        var elem = document.getElementById("progressBar");
+        var width = 10;
+        var id = setInterval(frame, 10);
+        function frame() {
+          if (width >= 100) {
+            clearInterval(id);
+            i = 0;
+          } else {
+            width++;
+            elem.style.width = width + "%";
+            elem.innerHTML = width  + "%";
+          }
         }
-        } //progressbar
+      }
+    } //progressbar
 
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "250px";
-            document.getElementById("main").style.marginLeft = "250px";
-            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-            }  //side menu
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+      document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    }  //side menu
 
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("main").style.marginLeft= "0";
-            document.body.style.backgroundColor = "white";
-            } //side menu
-    </script>
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+      document.body.style.backgroundColor = "white";
+    } //side menu
+
+
+    $(document).ready(function () {
+      const userPoints = document.getElementById('points');
+      const userName = document.getElementById('dashboard-name');
+      // Parse the query parameter from the URL
+      var urlParams = new URLSearchParams(window.location.search);
+      var userEmail = urlParams.get('email');
+
+      // Now userEmail contains the email address
+      console.log('User Email:', userEmail);
+      $.get('?tableName=mentorize_users' + encodeURIComponent(userEmail), function(user){
+        console.log(user)
+          userPoints.textContent = user[0].points;
+          userName.textContent = user[0].name;
+      });
+
+    }); 
+  </script>
 </body>
 </html>

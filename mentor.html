@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mentee Page</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     #Progress {
       width: 100%;    
@@ -71,90 +72,107 @@
   </style>
 </head>
 <body>
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        
-        <a href="mentor.html">Mentor</a>
-        <a href="mentee.html">Mentee</a>
-    
-      </div>
+  <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       
-      <div id="main">
-        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
-        <section id = "welcomeSection">
-            <h2>Welcome Mentor, </h2>
-            <h2>Your Balance:</h2>
-            <p id="balance"></p>
-        </section>
-        <section id = "progressSection">
-            <h2>Check your progress:</h2>
-            <div id="Progress">
-            <div id="progressBar">1%</div>
-            </div>
-            <br>
-            <!-- <button onclick="progress()">Click Here</button>  -->
-       </section>
+      <a href="mentor.html">Mentor</a>
+      <a href="mentee.html">Mentee</a>
+  
+    </div>
     
-      </div>
+    <div id="main">
+      <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+      <section id = "welcomeSection">
+          <h2>Welcome Mentor, <span id="dashboard-name"></span></h2>
+          <p id="points"></p>
+      </section>
+      <section id = "progressSection">
+          <h2>Check your progress:</h2>
+          <div id="Progress">
+          <div id="progressBar">1%</div>
+          </div>
+          <br>
+          <!-- <button onclick="progress()">Click Here</button>  -->
+      </section>
+  
+    </div>
+
+    
 
       
 
-       
+      <br>
+      <section id="selectMentor">
+          <h2>Select Your Mentor! </h2>
+          <label for="friendEmail">Choose your Mentor's email:</label>
+          <select id = "friendEmail" name = "friendEmail">
+              <option value="bconsalv@asu.edu">bconsalv@asu.edu</option>
+              <option value="jrchilto@asu.edu">jrchilto@asu.edu</option>
+              <option value="kmchowdh@asu.edu">kmchowdh@asu.edu</option>
+              <option value="mchou9@asu.edu">mchou9@asu.edu</option>
+              <option value="tnguy201@asu.edu">tnguy201@asu.edu</option>
+              <option value="wmellon@asu.edu">wmellon@asu.edu</option>
 
-        <br>
-        <section id="selectMentor">
-            <h2>Select Your Mentor! </h2>
-            <label for="friendEmail">Choose your Mentor's email:</label>
-            <select id = "friendEmail" name = "friendEmail">
-                <option value="bconsalv@asu.edu">bconsalv@asu.edu</option>
-                <option value="jrchilto@asu.edu">jrchilto@asu.edu</option>
-                <option value="kmchowdh@asu.edu">kmchowdh@asu.edu</option>
-                <option value="mchou9@asu.edu">mchou9@asu.edu</option>
-                <option value="tnguy201@asu.edu">tnguy201@asu.edu</option>
-                <option value="wmellon@asu.edu">wmellon@asu.edu</option>
+          </select>
+          <br><br>
+          
+      </section>
 
-            </select>
-            <br><br>
-           
-        </section>
+      
 
-        
+      </div>
 
-        </div>
-
-   
-    <script>
-        var i = 0;
-        function progress() {
-        if (i == 0) {
-            i = 1;
-            var elem = document.getElementById("progressBar");
-            var width = 10;
-            var id = setInterval(frame, 10);
-            function frame() {
-            if (width >= 100) {
-                clearInterval(id);
-                i = 0;
-            } else {
-                width++;
-                elem.style.width = width + "%";
-                elem.innerHTML = width  + "%";
-            }
-            }
+  
+  <script>
+    var i = 0;
+    function progress() {
+      if (i == 0) {
+        i = 1;
+        var elem = document.getElementById("progressBar");
+        var width = 10;
+        var id = setInterval(frame, 10);
+        function frame() {
+          if (width >= 100) {
+            clearInterval(id);
+            i = 0;
+          } else {
+            width++;
+            elem.style.width = width + "%";
+            elem.innerHTML = width  + "%";
+          }
         }
-        } //progressbar
+      }
+    } //progressbar
 
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "250px";
-            document.getElementById("main").style.marginLeft = "250px";
-            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-            }  //side menu
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+      document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    }  //side menu
 
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("main").style.marginLeft= "0";
-            document.body.style.backgroundColor = "white";
-            } //side menu
-    </script>
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+      document.body.style.backgroundColor = "white";
+    } //side menu
+
+
+    $(document).ready(function () {
+      const userPoints = document.getElementById('points');
+      const userName = document.getElementById('dashboard-name');
+      // Parse the query parameter from the URL
+      var urlParams = new URLSearchParams(window.location.search);
+      var userEmail = urlParams.get('email');
+
+      // Now userEmail contains the email address
+      console.log('User Email:', userEmail);
+      $.get('?tableName=mentorize_users' + encodeURIComponent(userEmail), function(user){
+        console.log(user)
+          userPoints.textContent = user[0].points;
+          userName.textContent = user[0].name;
+      });
+
+    }); 
+  </script>
 </body>
 </html>
