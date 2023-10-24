@@ -1,70 +1,86 @@
-<!doctype HTML>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Mentorize</title>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script src="index.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mentorize</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="index.js"></script>
 
-        <style>
-            #titles {
-                text-align: center;
-                background-color: #3285a8;
-                margin-bottom: -20;
-            }
+    <style>
+        body {
+            font-family: 'Neue Haas Grotesk', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
 
-            #loginForm {
-                text-align: center;
-                background-color: lightgrey;
-                border: 10px solid #3285a8;
-                margin-right: 35%;
-                margin-left: 35%;
-            }
+        #titles {
+            text-align: center;
+            background-color: #3285a8;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
 
-            #showPasswordButton {
-                font-size: 14px;
-                margin-top: 10px;
-            }
+        #loginForm {
+            text-align: center;
+            background-color: lightgrey;
+            border: 2px solid #3285a8;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            max-width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
+        #showPasswordButton {
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
 
+        hr {
+            background-color: black;
+            height: 1px;
+            margin: 20px 0;
+        }
 
-            #signUp {
-                font-family: 'Neue Haas Grotesk', sans-serif;
-                font-size: 12px;
+        #signUp {
+            font-size: 12px;
+            margin-top: 20px;
+        }
 
-            }
+        #signUp a {
+            color: #3285a8;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-            #signUp {
-                font-family: 'Neue Haas Grotesk', sans-serif;
-                font-size: 12px;
-
-            }
-
-            hr {
-                background-color: black;
-                height: .5px;
-            }
-
-        </style>
-    </head>
-
-    <body>
-        <div id="titles">
-            <h1>Welcome to Mentorize</h1>
-            <h2>Log in below to access your account.</h2>
-        </div>
-        <form id = "loginForm">
-            <label for="email">Email: </label>
-            <input type="text" id="email"> <br>
-            <label for="password">Password: </label>
-            <input type="password" id="password"> <br>
-            <button id="showPasswordButton" type="button">Show Password</button><br>
-            <button id="loginButton" type="button">Login</button>
-            <hr>
-            <p id="signUp">Don't have an account? <a href=''>Sign Up</a></p>
-        </form>
-        <div id = "errorText"></div>
-
-
-    </body>
+        #errorText {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="titles">
+        <h1>Welcome to Mentorize</h1>
+        <h2>Log in below to access your account.</h2>
+    </div>
+    <form id="loginForm">
+        <label for="email">Email:</label>
+        <input type="text" id="email" style="width: 100%; box-sizing: border-box; padding: 8px;" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" style="width: 100%; box-sizing: border-box; padding: 8px;" required><br>
+        <button id="showPasswordButton" type="button">Show Password</button><br>
+        <button id="loginButton" type="button" style="background-color: #3285a8; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Login</button>
+        <hr>
+        <p id="signUp">Don't have an account? <a href='' id="signupLink">Sign Up</a></p>
+    </form>
+    <div id="errorText"></div>
+</body>
 </html>

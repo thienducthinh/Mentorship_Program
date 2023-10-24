@@ -75,6 +75,6 @@ else {
 } // end for else
 }); // var server = http.createServer
 
-server.listen(3306);
+server.listen(8080);
 console.log("\nThe Web server is alive!!!\n"  + 
-    "It's listening on http://127.0.0.1:3306 or http://localhost:3306");
+    "It's listening on http://127.0.0.1:8080 or http://localhost:8080");
