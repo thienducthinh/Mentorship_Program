@@ -26,7 +26,7 @@ $(document).ready(function () {
         const emailInput = document.getElementById('email').value;
         const passwordInput = document.getElementById('password').value;
 
-        $.get('/api/users', function(users){
+        $.get('?tableName=users', function(users){
             let userFound = false;
             users.forEach(function(user){
                 if (user.email === emailInput) {
