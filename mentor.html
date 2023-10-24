@@ -166,10 +166,19 @@
 
       // Now userEmail contains the email address
       console.log('User Email:', userEmail);
-      $.get('?tableName=mentorize_users' + encodeURIComponent(userEmail), function(user){
-        // console.log(user)
-        userPoints.textContent = user[0].points;
-        userName.textContent = user[0].name;
+      // $.get('?tableName=mentorize_users' + encodeURIComponent(userEmail), function(user){
+      //   // console.log(user)
+      //   userPoints.textContent = user[0].points;
+      //   userName.textContent = user[0].name;
+      // });
+      $.get('?tableName=mentorize_users', function(table){
+        appUsers = JSON.parse(table);
+        appUsers.forEach(function(user){
+          if (user.email === userEmail) {
+            userPoints.textContent = user.points;
+            userName.textContent = user.name;
+          }
+        });
       });
 
     }); 
