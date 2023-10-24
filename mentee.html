@@ -68,6 +68,16 @@
       .sidenav {padding-top: 15px;}
       .sidenav a {font-size: 18px;}
     }
+
+    #points{
+      color: #3285a8;
+      font-size: 40px;
+      text-align: center;
+    }
+
+    #point-header {
+      text-align: center;
+    }
         
   </style>
 </head>
@@ -83,7 +93,8 @@
       <div id="main">
         <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
         <section id = "welcomeSection">
-            <h2>Welcome Mentee, <span id="dashboard-name"></span> </h2>
+            <h2>Welcome<span id="dashboard-name"></span>,</h2>
+            <h2 id="point-header">Your Points:</h2>
             <p id="points"></p>
         </section>
         <section id = "progressSection">
@@ -164,12 +175,14 @@
       var urlParams = new URLSearchParams(window.location.search);
       var userEmail = urlParams.get('email');
 
-      // Now userEmail contains the email address
-      console.log('User Email:', userEmail);
-      $.get('?tableName=mentorize_users' + encodeURIComponent(userEmail), function(user){
-        console.log(user)
-          userPoints.textContent = user[0].points;
-          userName.textContent = user[0].name;
+      $.get('?tableName=mentorize_users', function(table){
+        appUsers = JSON.parse(table);
+        appUsers.forEach(function(user){
+          if (user.email === userEmail) {
+            userPoints.textContent = user.points;
+            userName.textContent = user.name;
+          }
+        });
       });
 
     }); 
