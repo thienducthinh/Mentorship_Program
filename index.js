@@ -34,7 +34,11 @@ $(document).ready(function () {
                     if (user.password === passwordInput) {
                         // Redirect to the next page if email and password match
                         // Assuming userEmailAddress contains the email address
-                        window.location.href = 'dashboard.html?email=' + encodeURIComponent(user.email);
+                        if (user.role === 1) {
+                            window.location.href = 'mentor.html?email=' + encodeURIComponent(user.email);
+                        } else {
+                            window.location.href = 'mentee.html?email=' + encodeURIComponent(user.email);
+                        }
                     } else {
                         errorText.textContent = 'Incorrect password';
                     }
