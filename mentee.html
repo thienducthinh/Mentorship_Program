@@ -1,74 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mentee Page</title>
-    <style>
-        #Progress {
-        width: 100%;    
-        background-color: black;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentee Page</title>
+  <style>
+    #Progress {
+      width: 100%;    
+      background-color: black;
+    }
 
-        #progressBar {
-        width: 1%;
-        height: 40px;
-        background-color: #3285a8;
-        text-align: center;
-        line-height: 40px;
-        color: white;
-        }
+    #progressBar {
+      width: 1%;
+      height: 40px;
+      background-color: #3285a8;
+      text-align: center;
+      line-height: 40px;
+      color: white;
+    }
+    
+    body {
+      font-family: "Lato", sans-serif;
+      transition: background-color .5s;
+    }
+
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: lightblue;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+
+    .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidenav a:hover {
+      color: #f1f1f1;
+    }
+
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+
+    #main {
+      transition: margin-left .5s;
+      padding: 16px;
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {padding-top: 15px;}
+      .sidenav a {font-size: 18px;}
+    }
         
-        body {
-  font-family: "Lato", sans-serif;
-  transition: background-color .5s;
-}
-
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: lightblue;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-#main {
-  transition: margin-left .5s;
-  padding: 16px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-        
-    </style>
+  </style>
 </head>
 <body>
     <div id="mySidenav" class="sidenav">
@@ -82,7 +82,7 @@
       <div id="main">
         <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
         <section id = "welcomeSection">
-            <h2>Welcome, </h2>
+            <h2>Welcome Mentee, </h2>
         </section>
         <section id = "progressSection">
             <h2>Check your progress:</h2>
