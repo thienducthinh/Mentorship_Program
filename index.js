@@ -26,9 +26,10 @@ $(document).ready(function () {
         const emailInput = document.getElementById('email').value;
         const passwordInput = document.getElementById('password').value;
 
-        $.get('/api/users', function(users){
+        $.get('?tableName=mentorize_users', function(table){
             let userFound = false;
-            users.forEach(function(user){
+            appUsers = JSON.parse(table);
+            appUsers.forEach(function(user){
                 if (user.email === emailInput) {
                     userFound = true;
                     if (user.password === passwordInput) {
