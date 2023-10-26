@@ -108,7 +108,7 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         
         <a onclick=appendEventPage()>Events</a>
-        <a onclick=appendMainPage()>Log Out</a>
+        <a href="index.html">Log Out</a>
     
       </div>
       
@@ -222,18 +222,6 @@
       window.location.href = newUrl;
     }
 
-    function appendMainPage() {
-      // Parse the query parameter from the URL
-      var urlParams = new URLSearchParams(window.location.search);
-      var userEmail = urlParams.get('email');
-      
-      // Use pushState to update the URL without triggering a page reload
-      var newUrl = 'mentee.html?email=' + encodeURIComponent(userEmail);
-      history.pushState({}, '', newUrl);
-    
-      // Redirect to the events.html page
-      window.location.href = newUrl;
-    }
     
 
 
