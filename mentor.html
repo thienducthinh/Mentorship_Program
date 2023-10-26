@@ -9,6 +9,7 @@
     #Progress {
       width: 100%;    
       background-color: black;
+      margin: 5% auto;
     }
 
     #progressBar {
@@ -69,13 +70,13 @@
       .sidenav a {font-size: 18px;}
     }
 
-    #points{
+    .points{
       color: #3285a8;
       font-size: 40px;
       text-align: center;
     }
 
-    #point-header {
+    .point-header {
       text-align: center;
     }
         
@@ -87,6 +88,8 @@
       
       <a href="mentor.html">Mentor</a>
       <a href="mentee.html">Mentee</a>
+      <a href="index.html">Log Out</a>
+
   
     </div>
     
@@ -94,13 +97,15 @@
       <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
       <section id = "welcomeSection">
           <h2> Welcome <span id="dashboard-name"></span>,</h2>
-          <h2 id="point-header">Your Points:</h2>
-          <p id="points"></p>
+          <h2 class="point-header">Your Points:</h2>
+          <p class="points" id="points"></p>
       </section>
       <section id = "progressSection">
           <h2>Check your Mentee's progress:</h2>
-          <div id="Progress">
-          <div id="progressBar">1%</div>
+          <div id="menteeProgress">
+            <!-- <div id="Progress">
+              <div id="progressBar">1%</div>
+            </div> -->
           </div>
           <br>
           <!-- <button onclick="progress()">Click Here</button>  -->
@@ -170,6 +175,7 @@
     $(document).ready(function () {
       const userPoints = document.getElementById('points');
       const userName = document.getElementById('dashboard-name');
+      // const menteeProgress = document.getElementById('menteeProgress')
       // Parse the query parameter from the URL
       var urlParams = new URLSearchParams(window.location.search);
       var userEmail = urlParams.get('email');
@@ -180,6 +186,10 @@
           if (user.email === userEmail) {
             userPoints.textContent = user.points;
             userName.textContent = user.name;
+          }
+          if (user.mentor === userEmail) {
+            $("#menteeProgress").append("<div style=font-size:40px>" + user.name + "</div><div class=points>" + user.points + 
+              "</div><div id=Progress><div id=progressBar>1%</div></div>");
           }
         });
       });
