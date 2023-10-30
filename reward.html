@@ -101,10 +101,12 @@
       </section>
       <section id = "progressSection">
           <h2>Reward your Mentees</h2>
-          <div id="menteeProgress">
-            <!-- <div id="Progress">
-              <div id="progressBar">1%</div>
-            </div> -->
+          <div id="menteeReward">
+            <label for="amount">Enter a Number:</label>
+      <input type="number" id="amount" name="amount" min="0" max="100">
+      <label for="menteeEmail">Enter a Number:</label>
+      <input type = "text" id = "menteeEmail" name = "menteeEmail">
+      <button onclick="transfer()">Reward Points</button>
           </div>
           <br>
           <!-- <button onclick="progress()">Click Here</button>  -->
@@ -151,6 +153,38 @@
       }
   </script>
   <script>
+    function transfer() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var senderEmail = urlParams.get("email");
+        console.log(senderEmail)
+        var receiverEmail = document.getElementById("menteeEmail").value;
+        console.log(receiverEmail)
+        var amount = parseFloat(document.getElementById("amount").value);
+        var requestData = {
+        senderEmail: senderEmail,
+        receiverEmail: receiverEmail,
+        amount: amount
+        };
+      
+        fetch("/api/transfer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(requestData)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.message);
+          getUsers()
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+        //location.reload();
+      }
+  </script>
+  <script>
     
 
     function openNav() {
@@ -165,42 +199,6 @@
       document.body.style.backgroundColor = "white";
     } //side menu
 
-
-    $(document).ready(function () {
-      const userPoints = document.getElementById('points');
-      const userName = document.getElementById('dashboard-name');
-      // const menteeProgress = document.getElementById('menteeProgress')
-      // Parse the query parameter from the URL
-      var urlParams = new URLSearchParams(window.location.search);
-      var userEmail = urlParams.get('email');
-
-      $.get('?tableName=mentorize_users', function(table){
-        appUsers = JSON.parse(table);
-        appUsers.forEach(function(user){
-          if (user.email === userEmail) {
-            userPoints.textContent = user.points;
-            userName.textContent = user.name;
-          }
-          if (user.mentor === userEmail) {
-            $("#menteeProgress").append(`
-            <div style="text-align: center; margin-bottom: 10px;">
-              <div style="font-size: 24px;">${user.name}</div>
-              <div class="points" style="font-size: 18px; font-weight: bold;">
-                Points: ${user.points}
-              </div>
-            </div>
-            <div style="text-align: center;">
-              <label for="numberInput">Enter a Number:</label>
-              <input type="number" id="numberInput" name="numberInput" min="0" max="100" style="margin-right: 10px;">
-              <button style="padding: 5px 10px; font-size: 16px;">Send Points</button>
-            </div>
-          `);
-          
-          }
-        });
-      });
-
-    }); 
   </script>
 </body>
 </html>
