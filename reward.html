@@ -86,7 +86,7 @@
   <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       
-      <a onclick=appendRewardPage()>Reward</a>
+      <a onclick=appendMentorPage()>Main Page</a>
       <a href="index.html">Log Out</a>
 
   
@@ -100,7 +100,7 @@
           <p class="points" id="points"></p>
       </section>
       <section id = "progressSection">
-          <h2>Check your Mentee's progress:</h2>
+          <h2>Reward your Mentees</h2>
           <div id="menteeProgress">
             <!-- <div id="Progress">
               <div id="progressBar">1%</div>
@@ -137,39 +137,21 @@
       </div> -->
 
   <script>
-    function appendRewardPage() {
-      // Parse the query parameter from the URL
-      var urlParams = new URLSearchParams(window.location.search);
-      var userEmail = urlParams.get('email');
+    function appendMentorPage() {
+        // Parse the query parameter from the URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var userEmail = urlParams.get('email');
+        
+        // Use pushState to update the URL without triggering a page reload
+        var newUrl = 'mentor.html?email=' + encodeURIComponent(userEmail);
+        history.pushState({}, '', newUrl);
       
-      // Use pushState to update the URL without triggering a page reload
-      var newUrl = 'reward.html?email=' + encodeURIComponent(userEmail);
-      history.pushState({}, '', newUrl);
-    
-      // Redirect to the events.html page
-      window.location.href = newUrl;
-    }
+        // Redirect to the events.html page
+        window.location.href = newUrl;
+      }
   </script>
   <script>
-    var i = 0;
-    function progress() {
-      if (i == 0) {
-        i = 1;
-        var elem = document.getElementById("progressBar");
-        var width = 10;
-        var id = setInterval(frame, 10);
-        function frame() {
-          if (width >= 100) {
-            clearInterval(id);
-            i = 0;
-          } else {
-            width++;
-            elem.style.width = width + "%";
-            elem.innerHTML = width  + "%";
-          }
-        }
-      }
-    } //progressbar
+    
 
     function openNav() {
       document.getElementById("mySidenav").style.width = "250px";
@@ -200,14 +182,25 @@
             userName.textContent = user.name;
           }
           if (user.mentor === userEmail) {
-            $("#menteeProgress").append("<div style=font-size:40px>" + user.name + "</div><div class=points>" + user.points + 
-              "</div><div id=Progress><div id=progressBar>1%</div></div>");
+            $("#menteeProgress").append(`
+            <div style="text-align: center; margin-bottom: 10px;">
+              <div style="font-size: 24px;">${user.name}</div>
+              <div class="points" style="font-size: 18px; font-weight: bold;">
+                Points: ${user.points}
+              </div>
+            </div>
+            <div style="text-align: center;">
+              <label for="numberInput">Enter a Number:</label>
+              <input type="number" id="numberInput" name="numberInput" min="0" max="100" style="margin-right: 10px;">
+              <button style="padding: 5px 10px; font-size: 16px;">Send Points</button>
+            </div>
+          `);
+          
           }
         });
       });
 
     }); 
-
   </script>
 </body>
 </html>
