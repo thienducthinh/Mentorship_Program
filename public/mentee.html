@@ -192,7 +192,7 @@
             $.get('/api/users', function(users){
               let userFound = false;
               users.forEach(function(user) {
-                  if (user[0].email === userEmail) {
+                  if (user[0].name === userEmail) {
                       userFound = true;
                       userPoints.textContent = user[0].points;
                       userName.textContent = user[0].name;
