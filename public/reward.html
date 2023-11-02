@@ -139,18 +139,6 @@
       </div> -->
 
   <script>
-    // function appendMentorPage() {
-    //     // Parse the query parameter from the URL
-    //     var urlParams = new URLSearchParams(window.location.search);
-    //     var userEmail = urlParams.get('email');
-        
-    //     // Use pushState to update the URL without triggering a page reload
-    //     var newUrl = 'mentor.html?email=' + encodeURIComponent(userEmail);
-    //     history.pushState({}, '', newUrl);
-      
-    //     // Redirect to the events.html page
-    //     window.location.href = newUrl;
-    //   }
     
     $(document).ready(function () {
       const userBalance = document.getElementById('points');
@@ -163,11 +151,20 @@
       console.log('User Email:', userEmail);
       $.get('/api/users?email=' + encodeURIComponent(userEmail), function(user){
         console.log(user)
-          userBalance.textContent = user[0].M_and_G;
+          userBalance.textContent = user[0].points;
           userName.textContent = user[0].name;
       });
 
       });   
+    
+    function getUsers() {
+      $.get('/api/users', function(users){
+        $("#usersTable").empty();
+        users.forEach(function(user){
+          $("#usersTable").append("<tr><td width=200px>" + user.email + "</td><td width=170px>" + user.points + "</td></tr>");
+        });
+      });
+    }
 
     function transfer() {
         var urlParams = new URLSearchParams(window.location.search);
@@ -181,6 +178,7 @@
         receiverEmail: receiverEmail,
         amount: amount
         };
+        console.log(requestData)
       
         fetch("/api/transfer", {
           method: "POST",
