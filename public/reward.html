@@ -86,7 +86,7 @@
   <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       
-      <a onclick=appendMentorPage()>Main Page</a>
+      <a onclick=appendMainPage()>Main Page</a>
       <a href="index.html">Log Out</a>
 
   
@@ -213,6 +213,18 @@
       document.body.style.backgroundColor = "white";
     } //side menu
 
+    function appendMainPage() {
+      // Parse the query parameter from the URL
+      var urlParams = new URLSearchParams(window.location.search);
+      var userEmail = urlParams.get('email');
+      
+      // Use pushState to update the URL without triggering a page reload
+      var newUrl = 'mentor.html?email=' + encodeURIComponent(userEmail);
+      history.pushState({}, '', newUrl);
+    
+      // Redirect to the events.html page
+      window.location.href = newUrl;
+    }
   </script>
 </body>
 </html>
