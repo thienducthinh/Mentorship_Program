@@ -188,20 +188,26 @@
             var urlParams = new URLSearchParams(window.location.search);
             var userEmail = urlParams.get('email');
       
-            $.get('?tableName=mentorize_users', function (table) {
-              appUsers = JSON.parse(table);
-              appUsers.forEach(function (user) {
-                if (user.email === userEmail) {
-                  userPoints.textContent = user.points;
-                  userName.textContent = user.name;
-      
-                  // Update progress bar based on points
-                  var points = parseFloat(user.points);
-                  var percent = (points / 1000) * 100;
-                  progressBar.style.width = percent + "%";
-                  progressBar.innerHTML = percent + "%";
-                }
+
+            $.get('/api/users', function(users){
+              let userFound = false;
+              users.forEach(function(user) {
+                  if (user[0].email === userEmail) {
+                      userFound = true;
+                      userPoints.textContent = user[0].points;
+                      userName.textContent = user[0].name;
+          
+                      // Update progress bar based on points
+                      var points = parseFloat(user[0].points);
+                      var percent = (points / 1000) * 100;
+                      progressBar.style.width = percent + "%";
+                      progressBar.innerHTML = percent + "%";
+                  }
               });
+            
+              if (!userFound) {
+                  errorText.textContent = 'User not found';
+              }
             });
           });
       
