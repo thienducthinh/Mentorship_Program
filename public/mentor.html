@@ -150,6 +150,10 @@
         console.log(user)
           userBalance.textContent = user[0].points;
           userName.textContent = user[0].name;
+          if (user.mentor === userEmail) {
+            $("#menteeProgress").append("<div style=font-size:40px>" + user.name + "</div><div class=points>" + user.points + 
+              "</div><div id=Progress><div id=progressBar>1%</div></div>");
+          }
       });
 
       });   
