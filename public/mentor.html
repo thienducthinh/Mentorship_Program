@@ -148,9 +148,9 @@
       console.log('User Email:', userEmail);
       $.get('/api/users?email=' + encodeURIComponent(userEmail), function(user){
         console.log(user)
-          userBalance.textContent = user[0].points;
-          userName.textContent = user[0].name;
-          if (user[0].mentor === userEmail) {
+          // userBalance.textContent = user[0].points;
+          // userName.textContent = user[0].name;
+          if (user[0].mentor == userEmail) {
             console.log("works")
             $("#menteeProgress").append("<div style=font-size:40px>" + user[0].name + "</div><div class=points>" + user[0].points + 
               "</div><div id=Progress><div id=progressBar>1%</div></div>");
