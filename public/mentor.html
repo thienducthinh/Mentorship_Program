@@ -144,21 +144,24 @@
       var urlParams = new URLSearchParams(window.location.search);
       var userEmail = urlParams.get('email');
 
+      $.get('/api/users', function(users){
+        users.forEach(function(user){
+          if (user.mentor === userEmail) {
+            $("#menteeProgress").append("<div style=font-size:40px>" + user.name + "</div><div class=points>" + user.points + 
+              "</div><div id=Progress><div id=progressBar>1%</div></div>");
+          }
+        });
+      });
+
       // Now userEmail contains the email address
       console.log('User Email:', userEmail);
       $.get('/api/users?email=' + encodeURIComponent(userEmail), function(user){
         console.log(user)
           userBalance.textContent = user[0].points;
           userName.textContent = user[0].name;
-          console.log(user.mentor)
-          console.log(userEmail)
-          if (user[0].mentor == userEmail) {
-            $("#menteeProgress").append("<div style=font-size:40px>" + user[0].name + "</div><div class=points>" + user[0].points + 
-              "</div><div id=Progress><div id=progressBar>1%</div></div>");
-          }
       });
 
-      });   
+    });   
     
     function getUsers() {
       $.get('/api/users', function(users){
