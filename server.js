@@ -62,7 +62,7 @@ app.post('/api/transfer', (req, res) => {
     const receiverEmail = req.body.receiverEmail;
     const amount = parseFloat(req.body.amount);
 
-    if (isNaN(amount) || amount <= 0) {
+    if (isNaN(amount)) {
         res.status(400).send({ error: 'Invalid amount. Please enter a positive number.' });
         return;
     }
