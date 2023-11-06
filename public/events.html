@@ -147,17 +147,17 @@
         </section>
       </div>
       <div class="button-container">
-        <button class="reward-button" onclick="rewardPoints(10)">
+        <button class="reward-button" value=10 onclick="transfer()" id = "amount">
           <span class = "eventName">Team Meeting</span><br>
           <span class = "pointValue">+10 points</span>
         </button>
-        <button class="reward-button" onclick="rewardPoints(10)">
+        <button class="reward-button" value=10 onclick="transfer()" id = "amount">
           <span class = "eventName">1-on-1 Meeting</span><br>
           <span class = "pointValue">+10 points</span>
         </button>
-        <button class="reward-button" onclick="rewardPoints(15)">
+        <button class="reward-button" value=10 onclick="transfer()" id = "amount">
           <span class = "eventName">Social Event</span><br>
-          <span class = "pointValue">+15 points</span>
+          <span class = "pointValue">+10 points</span>
         </button>
       </div>
     
@@ -235,6 +235,37 @@
     
       // Redirect to the events.html page
       window.location.href = newUrl;
+    }
+    function transfer() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var senderEmail = urlParams.get("email");
+      console.log(senderEmail)
+      var receiverEmail = senderEmail;
+      console.log(receiverEmail)
+      var amount = parseFloat(document.getElementById("amount").value);
+      var requestData = {
+      senderEmail: senderEmail,
+      receiverEmail: receiverEmail,
+      amount: amount
+      };
+      console.log(requestData)
+    
+      fetch("/api/transfer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.message);
+        getUsers()
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+      location.reload();
     }
     
   </script>

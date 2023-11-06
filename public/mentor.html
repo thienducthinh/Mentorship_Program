@@ -6,20 +6,21 @@
   <title>Mentee Page</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
-    #Progress {
-      width: 100%;    
+    .progress-container {
+      width: 100%;
       background-color: black;
       margin: 5% auto;
-    }
-
-    #progressBar {
+  }
+  
+  .progress-bar {
       width: 1%;
       height: 40px;
       background-color: #3285a8;
       text-align: center;
       line-height: 40px;
       color: white;
-    }
+  }
+  
     
     body {
       font-family: "Lato", sans-serif;
@@ -146,12 +147,23 @@
 
       $.get('/api/users', function(users){
         users.forEach(function(user){
-          if (user.mentor === userEmail) {
-            $("#menteeProgress").append("<div style=font-size:40px>" + user.name + "</div><div class=points>" + user.points + 
-              "</div><div id=Progress><div id=progressBar>1%</div></div>");
-          }
+            if (user.mentor === userEmail) {
+                $("#menteeProgress").append(
+                    "<div class='mentee-progress'>" +
+                    "<div style='font-size:40px;'>" + user.name + "</div>" +
+                    "<div class='points'>" + user.points + "</div>" +
+                    "<div class='progress-container'>" +
+                    "<div class='progress-bar'>1%</div>" +
+                    "</div>" +
+                    "</div>"
+                );
+            }
         });
-      });
+    
+        // Call the function to update progress bars after populating mentee progress divs
+        updateProgressBars();
+    });
+    
 
       // Now userEmail contains the email address
       console.log('User Email:', userEmail);
@@ -187,24 +199,17 @@
   <script>
     
     var i = 0;
-    function progress() {
-      if (i == 0) {
-        i = 1;
-        var elem = document.getElementById("progressBar");
-        var width = 10;
-        var id = setInterval(frame, 10);
-        function frame() {
-          if (width >= 100) {
-            clearInterval(id);
-            i = 0;
-          } else {
-            width++;
-            elem.style.width = width + "%";
-            elem.innerHTML = width  + "%";
-          }
-        }
-      }
-    } //progressbar
+    function updateProgressBars() {
+      $(".mentee-progress").each(function() {
+          var elem = $(this).find(".progress-bar");
+          var points = parseInt($(this).find(".points").text(), 10);
+          var maxPoints = 1000; // Assuming max points for a mentee is 100, you can adjust this based on your requirements
+  
+          var width = (points / maxPoints) * 100;
+          elem.css("width", width + "%").text(Math.floor((points/1000)*100) + "%");
+      });
+  }
+  
 
     function openNav() {
       document.getElementById("mySidenav").style.width = "250px";
