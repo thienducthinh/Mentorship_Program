@@ -7,6 +7,13 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="login.js"></script>
   <style>
+
+    #progressSection {
+      background-color: rgb(129, 126, 126);
+      border-radius: 15px;
+      padding: 20px;
+    }
+
     #Progress {
       width: 100%;    
       background-color: black;
@@ -24,6 +31,10 @@
     body {
       font-family: "Lato", sans-serif;
       transition: background-color .5s;
+      background-image: url('world.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
     }
 
     .sidenav {
@@ -111,31 +122,23 @@
         <a href="index.html">Log Out</a>
     
       </div>
-      
+      <span style="font-size:35px;cursor:pointer" onclick="openNav()">&#9776; </span>
+
       <div id="main">
-        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
         <section id = "welcomeSection">
-            <h2>Welcome <span id="dashboard-name"></span>,</h2>
+            <h1 id="name">Welcome <span id="dashboard-name"></span>,</h1>
             <h2 id="point-header">Your Points:</h2>
             <p id="points"></p>
         </section>
         <section id = "progressSection">
-            <h2>Check your progress:</h2>
-            <div id="Progress">
-            <div id="progressBar">1%</div>
-            </div>
-            <br>
-            <!-- <button onclick="progress()">Click Here</button>  -->
-       </section>
-    
+          <h2 style="text-align: center;">Check your progress:</h2>
+          <div id="Progress">
+          <div id="progressBar">1%</div>
+          </div>
+          <br>
+     </section>
       </div>
-
-      
-
-       
-
-        <br>
-        <section id="selectMentor">
+        <!-- <section id="selectMentor">
             <h2>Select Your Mentor! </h2>
             <label for="friendEmail">Choose your Mentor's email:</label>
             <select id = "friendEmail" name = "friendEmail">
@@ -149,7 +152,7 @@
             </select>
             <br><br>
            
-        </section>
+        </section> -->
 
         
 
