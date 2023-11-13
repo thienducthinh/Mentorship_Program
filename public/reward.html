@@ -7,23 +7,23 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
 
-    #eventRequest {
+    #events {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
   }
 
-  #eventRequest th, #eventRequest td {
+  #eventTable th, #eventTable td {
       border: 1px solid #dddddd;
       padding: 8px;
       text-align: left;
   }
 
-  #eventRequest th {
+  #eventTable th {
       background-color: #f2f2f2;
   }
 
-  #eventRequest button {
+  #eventTable button {
       padding: 5px 10px;
       cursor: pointer;
   }
@@ -173,36 +173,19 @@
       </section>
     </div>
 
-    <div>
-      <table id = "eventRequest">
+    <div id = "events">
+      <table id = "eventTable">
         <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Event</th>
-                <th>Points</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Ben Consalvo</td>
-                <td>bconsalv@asu.edu</td>
-                <td>Happy Hour</td>
-                <td>10</td>
-                <td><button id = "amountButton" value = 10 onclick=transferButton(this)>Reward</button></td>
-            </tr>
-            <tr>
-              <td>Kamiliah Chowdhurry</td>
-              <td>kmchowdh@asu.edu</td>
-              <td>Team Meeting</td>
-              <td>10</td>
-              <td><button id = "amountButton" value = 10 onclick=transferButton(this)>Reward</button></td>
+          <tr>
+            <th>Email</th>
+            <th>Event</th>
+            <th>Points</th>
+            <th>Mentor Email</th>
+            <th>Action</th>
           </tr>
-        </tbody>
-    </table>
+      </thead>
+      </table>
     </div>
-
 
   <script>
     
@@ -233,14 +216,38 @@
             }
         });
     });
-
-      });   
+    $.get('/api/events', function(events){
+      eventTable = document.getElementById('eventTable');
+      console.log(events);
+      // Assuming events is an array of events for the user
+      events.forEach(function(event){
+        $("#eventTable").append(
+                    "<td>" +event.mentee_email+"</td>"+
+                    "<td>" +event.event_name+"</td>"+
+                    "<td>" +event.points+"</td>"+
+                    "<td>" +event.mentor_email+"</td>"+
+                    "<td> <button id = `amountButton` value = 10 onclick=transferButton(this)> Reward</button></td>"
+                    
+                );
+      });
+    });
+  });
+  
     
     function getUsers() {
       $.get('/api/users', function(users){
         $("#usersTable").empty();
         users.forEach(function(user){
           $("#usersTable").append("<tr><td width=200px>" + user.email + "</td><td width=170px>" + user.points + "</td></tr>");
+        });
+      });
+    }
+
+    function getEvents() {
+      $.get('/api/events', function(events){
+        $("#eventsTable").empty();
+        events.forEach(function(events){
+          $("#eventsTable").append("<tr><td width=200px>" + event.event_name + "</td><td width=170px>" + event.mentee_email + "</td></tr>");
         });
       });
     }
@@ -283,44 +290,48 @@
   </script>
 
 
-  <script>
-    function transferButton(button) {
-      var row = button.parentNode.parentNode;
-      console.log(row)
-      var urlParams = new URLSearchParams(window.location.search);
-      var senderEmail = urlParams.get("email");
-      console.log(senderEmail)
-      var receiverEmail = row.querySelector('td:nth-child(2)').textContent;
-      console.log(receiverEmail)
-      var amount = row.querySelector('td:nth-child(4)').textContent;
-      console.log(amount)
-      var requestData = {
-          senderEmail: senderEmail,
-          receiverEmail: receiverEmail,
-          amount: amount
-      };
-      console.log(requestData)
-  
-      fetch("/api/transfer", {
-          method: "POST",
-          headers: {
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify(requestData)
-      })
-          .then(response => response.json())
-          .then(data => {
-              console.log(data.message);
-              getUsers();
-          })
-          .catch(error => {
-              console.error("Error:", error);
-          });
-      
-      location.reload();
+   <script>
+  function transferButton(button) {
+    var row = button.parentNode.parentNode;
+    console.log(row)
+    var urlParams = new URLSearchParams(window.location.search);
+    var senderEmail = urlParams.get("email");
+    console.log(senderEmail)
+    var receiverEmail = row.querySelector('td:nth-child(2)').textContent;
+    console.log(receiverEmail)
+    
+    var amount = row.querySelector('td:nth-child(4)').textContent;
+    console.log(amount)
+    
+    var requestData = {
+      senderEmail: senderEmail,
+      receiverEmail: receiverEmail,
+      amount: amount
+    };
+    console.log(requestData);
+
+    fetch("/api/transfer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(requestData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.message);
+      // Assuming getUsers is a function that you have defined elsewhere
+      getUsers();
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+
+   // location.reload(); // Reloading the page after the fetch might not be necessary depending on your use case
   }
+</script>
+
   
-  </script>
 
 
   <script>

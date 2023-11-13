@@ -119,6 +119,20 @@ app.post('/api/transfer2', (req, res) => {
     });
 });
 
+app.get('/api/events', (req, res) => {
+    let query = 'SELECT * FROM Event_Log';
+
+    con.query(query, (err, result, fields) => {
+        if (err) {
+            console.log('\n\n');
+            console.log('Error fetching log: ' + err);
+            res.status(500).send('Error fetching log');
+        } else {
+            res.send(result);
+        }
+    });
+});
+
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
