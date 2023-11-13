@@ -7,6 +7,26 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="login.js"></script>
   <style>
+    #upgradeButton {
+      background-color: #3285a8;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    #upgrade{
+      text-align: center;
+      margin-top: 20px;
+    }
+  
+    #upgradeButton:hover {
+      background-color: #1a5d75; /* Change the background color on hover */
+    }
 
     #progressSection {
       background-color: rgb(169, 169, 169);
@@ -137,26 +157,9 @@
           <div id="progressBar">1%</div>
           </div>
           <br>
-     </section>
-      </div>
-        <!-- <section id="selectMentor">
-            <h2>Select Your Mentor! </h2>
-            <label for="friendEmail">Choose your Mentor's email:</label>
-            <select id = "friendEmail" name = "friendEmail">
-                <option value="bconsalv@asu.edu">bconsalv@asu.edu</option>
-                <option value="jrchilto@asu.edu">jrchilto@asu.edu</option>
-                <option value="kmchowdh@asu.edu">kmchowdh@asu.edu</option>
-                <option value="mchou9@asu.edu">mchou9@asu.edu</option>
-                <option value="tnguy201@asu.edu">tnguy201@asu.edu</option>
-                <option value="wmellon@asu.edu">wmellon@asu.edu</option>
-
-            </select>
-            <br><br>
-           
-        </section> -->
-
-        
-
+          </section>
+      <div id = "upgrade" style="text-align: center;">
+          <button style = "display: none;" id = "upgradeButton" value = 1 onclick=transferRole()>Upgrade to Mentor!</button>
         </div>
 
    
@@ -187,6 +190,7 @@
       const userPoints = document.getElementById('points');
       const userName = document.getElementById('dashboard-name');
       const progressBar = document.getElementById('progressBar');
+      const upgradeButton = document.getElementById('upgradeButton');
 
       // Parse the query parameter from the URL
       var urlParams = new URLSearchParams(window.location.search);
@@ -204,9 +208,13 @@
       var percent = (user[0].points / 1000) * 100;
       progressBar.style.width = percent + "%";
       progressBar.innerHTML = Math.floor(percent) + "%";
-      if (percent == 100){
-        confetti.start()
-      }
+      if (points == 1000) {
+        upgradeButton.style.display = 'flex';
+    }
+
+    if (percent == 100){
+        confetti.start();
+    }
     });
       });   
     
@@ -245,8 +253,41 @@
             document.body.style.backgroundColor = "white";
           } //side menu
 
-          
         </script>
   <script src="confetti.js"></script>
+  <script>
+    function transferRole() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var senderEmail = urlParams.get("email");
+      console.log(senderEmail)
+      var receiverEmail = urlParams.get("email");
+      console.log(receiverEmail)
+      var role = parseFloat(document.getElementById("upgradeButton").value);
+      var requestData = {
+          senderEmail: senderEmail,
+          receiverEmail: receiverEmail,
+          role: role
+      };
+      console.log(requestData)
+  
+      fetch("/api/transfer2", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify(requestData)
+      })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data.message);
+              getUsers();
+          })
+          .catch(error => {
+              console.error("Error:", error);
+          });
+      
+          window.location.href = 'index.html';
+  }
+  </script>
 </body>
 </html>
