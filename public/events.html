@@ -151,15 +151,15 @@
         </section>
       </div>
       <div class="button-container">
-        <button class="reward-button" value=10 onclick="transfer()" id = "amount">
+        <button class="reward-button" value="Team Meeting" onclick="addRow(this)" id = "amount">
           <span class = "eventName">Team Meeting</span><br>
           <span class = "pointValue">+10 points</span>
         </button>
-        <button class="reward-button" value=10 onclick="transfer()" id = "amount">
+        <button class="reward-button" value="1-on-1 Meeting" onclick="addRow(this)" id = "amount">
           <span class = "eventName">1-on-1 Meeting</span><br>
           <span class = "pointValue">+10 points</span>
         </button>
-        <button class="reward-button" value=10 onclick="transfer()" id = "amount">
+        <button class="reward-button" value="Social Event" onclick="addRow(this)" id = "amount">
           <span class = "eventName">Social Event</span><br>
           <span class = "pointValue">+10 points</span>
         </button>
@@ -169,6 +169,21 @@
 
    
   <script>
+
+    $(document).ready(function() {
+      $.get('/api/events', function(events){
+        eventTable = document.getElementById('eventTable');
+        console.log("Table element:", eventTable);
+        console.log("Events:", events);
+      })
+      .done(function() {
+        console.log("Request completed successfully");
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        console.error("Error:", textStatus, errorThrown);
+      });
+    });
+    
     var i = 0;
     function progress() {
       if (i == 0) {
@@ -188,6 +203,7 @@
         }
       }
     } //progressbar
+
 
     function openNav() {
       document.getElementById("mySidenav").style.width = "250px";
@@ -271,6 +287,41 @@
       });
       location.reload();
     }
+    function addRow(button) {
+      var urlParams = new URLSearchParams(window.location.search);
+      var email = urlParams.get("email");
+      console.log(email);
+      var mentorEmail = "wmellon@asu.edu";
+      var event = button.value;
+      console.log(event);
+      var points = 10;
+      
+    
+      var rowData = {
+        event_name: event,
+        mentee_email: email,
+        points: points,
+        mentor_email: mentorEmail
+      };
+      console.log(rowData);
+    
+      fetch("/api/events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rowData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.message);
+          // Perform any additional actions if needed
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+    
     
   </script>
 </body>

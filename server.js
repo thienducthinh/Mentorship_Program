@@ -133,6 +133,24 @@ app.get('/api/events', (req, res) => {
     });
 });
 
+// Add a new event
+app.post('/api/events', (req, res) => {
+    const { event_name, mentee_email, points, mentor_email } = req.body;
+
+    // Assuming you have validation and sanitization checks
+
+    let query = 'INSERT INTO Event_Log (event_name, mentee_email, points, mentor_email) VALUES (?, ?, ?, ?)';
+
+    con.query(query, [event_name, mentee_email, points, mentor_email], (err, result) => {
+        if (err) {
+            console.log('Error adding event: ' + err);
+            res.status(500).send('Error adding event');
+        } else {
+            console.log('Event added successfully');
+            res.send({ message: 'Event added successfully' });
+        }
+    });
+});
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
