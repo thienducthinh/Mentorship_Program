@@ -231,9 +231,11 @@
             // Parse the query parameter from the URL
             var urlParams = new URLSearchParams(window.location.search);
             var userEmail = urlParams.get('email');
+            var mEmail = urlParams.get('memail');
       
             // Use pushState to update the URL without triggering a page reload
             var newUrl = 'events.html?email=' + encodeURIComponent(userEmail);
+            var newUrl = 'events.html?email=' + encodeURIComponent(userEmail) + '&memail=' + encodeURIComponent(mEmail);
             history.pushState({}, '', newUrl);
       
             // Redirect to the events.html page

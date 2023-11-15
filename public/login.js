@@ -19,7 +19,7 @@ $(document).ready(function () {
                         if (user.role === 1) {
                             window.location.href = 'mentor.html?email=' + encodeURIComponent(user.email);
                         } else {
-                            window.location.href = 'mentee.html?email=' + encodeURIComponent(user.email);
+                            window.location.href = 'mentee.html?email=' + encodeURIComponent(user.email) + '&memail=' + encodeURIComponent(user.mentor);
                         }
                     } else {
                         errorText.textContent = 'Incorrect password';
