@@ -7,12 +7,23 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
 
+    #progressSection {
+      background-color: rgb(169, 169, 169);
+      border: 2px solid #3285a8;
+      border-radius: 15px;
+      padding: 20px;
+    }
+
     #events {
-      width: 100%;
+      width: 75%;
       border-collapse: collapse;
       margin-top: 20px;
       margin-left: auto;
       margin-right: auto;
+      background-color: rgb(169, 169, 169);
+      border: 2px solid #3285a8;
+      border-radius: 15px;
+      padding: 20px;
   }
   
   #events #eventTable th,
@@ -167,7 +178,7 @@
           <p class="points" id="points"></p>
       </section>
       <section id="progressSection">
-        <h2>Reward your Mentees</h2>
+        <h2>Reward your Mentees:</h2>
         <div id="menteeReward">
           <label for="amount">Enter a Number:</label>
           <input type="number" id="amount" name="amount" min="-100" max="100">
@@ -235,8 +246,8 @@
                     "<td>" +event.event_name+"</td>"+
                     "<td>" +event.points+"</td>"+
                     "<td>" +event.mentor_email+"</td>"+
-                    "<td> <button id = `amountButton` value = 10 onclick=transferButton(this)> Reward</button></td>"+"</tr>"
-                    
+                    "<td> <button id = `amountButton` value = 10 onclick=transferButton(this);> Reward</button></td>"+"</tr>"
+                  
                 );
       });
     });
@@ -338,6 +349,8 @@
 
    // location.reload(); // Reloading the page after the fetch might not be necessary depending on your use case
   }
+
+
 </script>
 
   
